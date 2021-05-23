@@ -267,24 +267,7 @@ export class DateTimePicker extends DateTimePickerBase {
     }
 
     private static _applyNumberPickerColor(numberPicker: android.widget.NumberPicker, color: Color) {
-        const wheelPaint = DateTimePicker._findFieldByName(numberPicker, "mSelectorWheelPaint");
-        const selectionDividerDrawable = DateTimePicker._findFieldByName(numberPicker, "mSelectionDivider");
-        if (!wheelPaint || !selectionDividerDrawable ||
-            !(wheelPaint instanceof android.graphics.Paint) ||
-            !(selectionDividerDrawable instanceof android.graphics.drawable.Drawable)) {
-            return;
-        }
-        wheelPaint.setColor(color.android);
-        const childCount = numberPicker.getChildCount();
-        for (let i = 0; i < childCount; i++) {
-            let child = numberPicker.getChildAt(i);
-            if (child instanceof android.widget.EditText) {
-                child.setTextColor(color.android);
-            }
-        }
-        const filter = AppCompatNamespace.widget.AppCompatDrawableManager.getPorterDuffColorFilter(
-            color.android, android.graphics.PorterDuff.Mode.SRC_IN);
-        selectionDividerDrawable.setColorFilter(filter);
+        (numberPicker as any).setTextColor(color.android);
         numberPicker.invalidate();
     }
 
